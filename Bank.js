@@ -2,36 +2,81 @@
 // Bank Class: Manages multiple accounts
 class Bank {
     constructor() {
-        this.accounts = []; // Stores all accounts in the bank
+        this.accounts = []; 
     }
 
-    // Add methods here:
-    // Example: createAccount(name, initialDeposit)
+// Add methods here:
+// Example: createAccount(name, initialDeposit)
 
+    createAccount(name, initialDeposit) {
+        const newAccount = new BankAccount(name, initialDeposit);
+        this.accounts.push(newAccount);
+        return newAccount
+
+    }
 }
 
 // Account Class: Represents a single user's account
-class Account {
-    constructor(name, balance = 0) {
-        this.name = name; // Account holder's name
-        this.balance = balance; // Initial balance (default is 0)
-        this.transactionHistory = []; // Keeps a record of all transactions
+
+class BankAccount {
+    constructor(accountHoldername, balance) {
+        this.accountHoldername = accountHoldername;
+        this.balance = balance;
+        this.transactionHistory = [];
     }
 
-    // Add methods here:
-    // Example: deposit(amount) 
-    // example data to be stored in transactionHistory { transactionType: 'Deposit', amount: 500 }
+// Add methods here:
+// Example: deposit(amount) 
+// // example data to be stored in transactionHistory { transactionType: 'Deposit', amount: 500 } 
+// Example: withdraw(amount)
+// example data to be stored in transactionHistory { transactionType: 'Withdrawal', amount: 200 }
 
-    // Example: withdraw(amount)
-    // example data to be stored in transactionHistory { transactionType: 'Withdrawal', amount: 200 }
-
-    // Example: transfer(amount, recipientAccount)
-    // example data to be stored in transactionHistory:
-    // for account sending { transactionType: 'Transfer', amount: 300, to: recipientName }
-    // for account recieving { transactionType: 'Received', amount: 300, from: senderName }
-    
-    // Example: checkBalance()
+    deposit(amount) {
+        if (amount <= 0) {
+            console.log('invalid amount');
+        }
+        else {
+            this.balance += amount;
+            this.transactionHistory.push({transactionType: 'Deposit', amount});
+            console.log(`Deposited $${amount}`);
+        }
+    }
+    withdraw(amount) {
+        if (amount > this.balance){
+        console.log ('Insufficient funds.');
+        }
+        else {
+            this.balance -= amount;
+            this.transactionHistory.push({transactionType: 'Withdrawal', amount});
+            console.log(`Withdrawal $${amount}`);
+        }
 }
+
+// Example: transfer(amount, recipientAccount)
+// example data to be stored in transactionHistory:
+// for account sending { transactionType: 'Transfer', amount: 300, to: recipientName }
+// for account recieving { transactionType: 'Received', amount: 300, from: senderName }
+
+    transfer(amount, recipientAccount) {
+        if (amount > this.balance) {
+            console.log ('Insufficient funds.');
+        }
+        else {
+            this.balance -= amount;
+            this.transactionHistory.push ({transactionType: 'Transfer', amount, to: recipientAccount.accountHoldername});
+            recipientAccount.balance += amount;
+            recipientAccount.transactionHistory.push ({transactionType: 'Received', amount, from: this.accountHoldername})
+            
+        }
+    }
+// checkBalance()
+    checkBalance() {
+        console.log(`Current balance for ${this.accountHoldername}: $${this.balance}`);
+        return this.balance;        
+    }
+}
+    
+
 
 //<-------------------------------DO NOT WRITE BELOW THIS LINE------------------------------>
 

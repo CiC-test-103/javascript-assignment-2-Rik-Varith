@@ -23,6 +23,7 @@ class BankAccount {
         this.accountHoldername = accountHoldername;
         this.balance = balance;
         this.transactionHistory = [];
+        
     }
 
 // Add methods here:
@@ -39,6 +40,7 @@ class BankAccount {
             this.balance += amount;
             this.transactionHistory.push({transactionType: 'Deposit', amount});
             console.log(`Deposited $${amount}`);
+            console.log(`Current balance for ${this.accountHoldername}: $${this.balance}`);
         }
     }
     withdraw(amount) {
@@ -49,6 +51,7 @@ class BankAccount {
             this.balance -= amount;
             this.transactionHistory.push({transactionType: 'Withdrawal', amount});
             console.log(`Withdrawal $${amount}`);
+            console.log(`Current balance for ${this.accountHoldername}: $${this.balance}`);
         }
 }
 
@@ -66,7 +69,7 @@ class BankAccount {
             this.transactionHistory.push ({transactionType: 'Transfer', amount, to: recipientAccount.accountHoldername});
             recipientAccount.balance += amount;
             recipientAccount.transactionHistory.push ({transactionType: 'Received', amount, from: this.accountHoldername})
-            
+            console.log(`tranfer $${amount} to ${recipientAccount.a} completed, ${this.accountHoldername} Current balance: $${this.balance}`);
         }
     }
 // checkBalance()
